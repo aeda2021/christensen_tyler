@@ -1,0 +1,53 @@
+Q1: I was torn whether it would follow the MLE plot or be the inverse of the MLE plot.  We ultimately decided it would be the inverse.
+
+Q2a: 
+
+plot(p.test, chi)
+abline(1.92, 0)
+
+Q2b: 95% CI =~ (0.05, 0.4)
+The chi-square test statistic drops below the critical value (i.e. the probability of achieving that result under a null scenario is less than p = 0.05) between these two values (approximately)
+
+Q3a: 
+
+> ci.min2
+[1] "0.149"
+> ci.max2
+[1] "0.259"
+
+Q4a: As we add predictors, the chances of getting larger test statistics (apparent differences in model performance) goes up, but so does the chi square distribution (and thus the critical value)
+
+Q4b: the increasing df by adding predictors can improve model performance by chance, but the higher critical value accounts for this to some extent
+
+Q5: The likelihood ratio test is asking whether the data are better explained by one model over another.  The p-value identifies the probability that the observed difference between model performance occured by chance.
+
+Q6a: The chi-square test statistic identifies where along the probability distribution the observed difference in model performance falls.  The p-value estimates how likely we are to see a model difference equal to or greater than the observed difference under the assumption that the model's predictive power is actually the same (null)
+
+Q6b: That the models being compared do not differ in their predictive power
+
+Q6c: Sex has significant predictive power
+
+fm3 <- glm(Survived ~ Sex, family = "binomial", data = titanic)
+fm4 <- glm(Survived ~ Pclass, family = "binomial", data = titanic)
+fm5 <- glm(Survived ~ Age, family = "binomial", data = titanic)
+fm6 <- glm(Survived ~ Sex + Age, family = "binomial", data = titanic)
+fm7 <- glm(Survived ~ Sex + Pclass, family = "binomial", data = titanic)
+fm8 <- glm(Survived ~ Age + Pclass, family = "binomial", data = titanic)
+fm9 <- glm(Survived ~ Age + Sex + Pclass, family = "binomial", data = titanic)
+fm10 <- glm(Survived ~ Age * Sex, family = "binomial", data = titanic)
+fm11 <- glm(Survived ~ Sex * Pclass, family = "binomial", data = titanic)
+
+Q8: Because there are models in which there is no variable overlap
+
+Q9: Delta AIC is the difference in AIC scores between two candidate models. This is more important because AIC scores are only relative; they estimate how much more or less well one candidate model accounts for a data *relative to* another candidate model.
+
+Q10: My best model was Survived ~ Age + Sex + Pclass, followed by Sex * Pclass (delta AIC = 2.34)
+
+Q11a: Looks like the negative binomial distribution fits better.
+
+Q11b: AIC is lower (relatively less information lost), and the Log-likelihood is higher (more likely to get the distribution we have given the hypothesized distribution).
+
+Q12: In the first scenario, we want to generate the most holistic model possible, investigating as many variables as we can measure to see what components of the system could possibly be related to our variable of interest (something to do with bees).  The probelm is, if we measure and include *enough* variables, some variables may appear to explain some of the variance in our response variable (something to do with bees) even when in reality they do not.  In the second scenario, we only include variables that make ecological sense that we have good reason to think may be related to our bees.  This second approach avoids the issues with the first, but also narrows the scope of the investigation.
+
+Q13: Just eyeballing, many of the models within 2 delta AIC of the lowest had the following variables appear in most of the models with large coefficient absolute values: x3, x7 (not sure if this interpretation is even close to right)
+
